@@ -34,3 +34,23 @@
 + Express-Handlebars - 模板引擎
 
 ## 安裝與執行步驟
+1. 開啟終端機，cd 到想要存放此專案的資料夾，輸入以下指令
+```
+git clone https://github.com/yujen77300/Restaurant_list
+```
+2. 進入存放此專案的資料夾，輸入以下指令
+```
+cd Restaurant_list
+```
+3. 安裝npm套件
+```
+npm install
+```
+4. 執行此專案
+```
+npm run dev
+```
+5. 打開瀏覽器，輸入下列
+```
+localhost:3000
+```
