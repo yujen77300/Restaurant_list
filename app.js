@@ -1,7 +1,22 @@
 const express = require('express')
 // 拿express套件裡面的express函數存到app這個變數
 const app = express()
+// 載入mongoose
+const mongoose = require('mongoose')
 const port = 3000
+
+// 設定連線到 mongoDB，告訴程式去哪裡找資料庫
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// 取得資料庫連線狀態
+const db = mongoose.connection
+// 連線異常
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+// 連線成功
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
 
 // 載入handlebars，這是用來處理要回傳給瀏覽器的畫面
 const exphbs = require('express-handlebars')
@@ -27,6 +42,7 @@ app.get('/', (req, res) => {
 
 //設定靜態網站的路由
 app.use(express.static('public'))
+
 
 // 設定show的路由
 app.get('/restaurants/:id', (req, res) => {
