@@ -32,36 +32,39 @@ app.set('view engine', 'handlebars')
 
 
 
-// 設定路由
+// 功能一 : 設定瀏覽全部所有餐廳的路由
 // Express 會「回傳 HTML 來呈現前端樣板」
 // 決定要用index這個局部模板，在透過上面定義樣板引擎的解析
-// 第二個參數可以movieOne的資料送到index.handlebar，在渲染index這個partial template時候，可以使用movies這個物件
 app.get('/', (req, res) => {
   // 用.find()拿到全部的todo資料
   Restaurant.find()
     .lean()
     .then(restaurantList => res.render('index', { restaurant: restaurantList }))
-    .catch(error => console.error(error))
+    .catch(error => console.log(error))
   //  Express 會「回傳 HTML 來呈現前端樣板index.handlebars」
   // res.render('index', { restaurant: restaurantList.results })
 })
 
 
-//設定靜態網站的路由
+//設定靜態檔案的路由
 app.use(express.static('public'))
 
 
-// 設定show的路由
+// 功能二 : 設定瀏覽一家餐廳的詳細資訊，show的路由 
 app.get('/restaurants/:id', (req, res) => {
   // 要顯示資訊只會有一個，所以用find
-  const restaurant = restaurantList.results.find(item => item.id.toString() === req.params.id)
-  res.render('show', { restaurant: restaurant })
+  // const restaurant = restaurantList.results.find(item => item.id.toString() === req.params.id)
+  // 用mongoose的方法來找特定ip
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurantList => res.render('show', { restaurant: restaurantList }))
+    .catch(error => console.log(error))
+  // res.render('show', { restaurant: restaurant })
 })
 
 // 設定搜尋的路由
 app.get('/search', (req, res) => {
-
-
   let searchRestaurant = restaurantList.results.filter(function (item) {
     //如果輸入值無效，導向根目錄
     if (!req.query.keyword && !req.query.location) {
