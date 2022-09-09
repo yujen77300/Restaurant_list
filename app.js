@@ -20,8 +20,10 @@ db.once('open', () => {
 
 // 載入handlebars，這是用來處理要回傳給瀏覽器的畫面
 const exphbs = require('express-handlebars')
-//取得RESTAURANT的JSON檔案
+//原本是透過JSON檔案取得 restaurantList，
 const restaurantList = require('./restaurant.json')
+// 但接下來要透過取得restaurant的model來取得資料
+const Restaurant = require('./models/restaurant')
 // 再來要告訴express要把樣板引擎給handlebars，第一個參數為樣板引擎名稱，第二個代表預設部局使用main檔案
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 // 要設定view engine是用handkebars，這邊第二個參數就是上面方法的第一個參數
@@ -35,8 +37,13 @@ app.set('view engine', 'handlebars')
 // 決定要用index這個局部模板，在透過上面定義樣板引擎的解析
 // 第二個參數可以movieOne的資料送到index.handlebar，在渲染index這個partial template時候，可以使用movies這個物件
 app.get('/', (req, res) => {
-  //  Express 會「回傳 HTML 來呈現前端樣板」
-  res.render('index', { restaurant: restaurantList.results })
+  // 用.find()拿到全部的todo資料
+  Restaurant.find()
+    .lean()
+    .then(restaurantList => res.render('index', { restaurant: restaurantList }))
+    .catch(error => console.error(error))
+  //  Express 會「回傳 HTML 來呈現前端樣板index.handlebars」
+  // res.render('index', { restaurant: restaurantList.results })
 })
 
 
