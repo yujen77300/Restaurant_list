@@ -136,22 +136,27 @@ app.post('/restaurants/:id/delete', (req, res) => {
 })
 
 
-// 設定搜尋的路由
+// 功能六 : 設定搜尋的路由(從原本在json檔案裡面找改成透過mongoose的find方法來找)
 app.get('/search', (req, res) => {
-  let searchRestaurant = restaurantList.results.filter(function (item) {
-    //如果輸入值無效，導向根目錄
-    if (!req.query.keyword && !req.query.location) {
-      return res.redirect('/')
-    }
+  //如果輸入值無效，導向根目錄
+  if (!req.query.keyword && !req.query.location) {
+    return res.redirect('/')
+  }
+  // 如果地區沒有輸入，則代表為台北市
+  if (!req.query.location) {
+    req.query.location = "台北市"
+  }
 
-    // 如果地區沒有輸入，則代表為台北市
-    if (!req.query.location) {
-      req.query.location = "台北市"
-    }
-    // 回傳包含位置、名字、類別的餐廳陣列
-    return (item.name.toLowerCase().includes(req.query.keyword.trim().toLowerCase()) && item.location.toLowerCase().includes(req.query.location.trim().toLowerCase())) || (item.category.toLowerCase().includes(req.query.keyword.trim().toLowerCase()) && item.location.toLowerCase().includes(req.query.location.trim().toLowerCase()))
-  })
-  res.render('index', { restaurant: searchRestaurant, keyword: req.query.keyword, location: req.query.location, totalResults: `共發現${searchRestaurant.length}間餐廳` })
+  Restaurant.find({})
+    .lean()
+    .then(restaurantList => {
+      const searchRestaurant = restaurantList.filter(function (item) {
+        // 回傳包含位置、名字、類別的餐廳陣列
+        return (item.name.toLowerCase().includes(req.query.keyword.trim().toLowerCase()) && item.location.toLowerCase().includes(req.query.location.trim().toLowerCase())) || (item.category.toLowerCase().includes(req.query.keyword.trim().toLowerCase()) && item.location.toLowerCase().includes(req.query.location.trim().toLowerCase()))
+      })
+      res.render('index', { restaurant: searchRestaurant, keyword: req.query.keyword, location: req.query.location, totalResults: `共發現${searchRestaurant.length}間餐廳` })
+    })
+    .catch(err => console.log(err))
 
 })
 
