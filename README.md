@@ -1,5 +1,5 @@
 # 餐廳清單2.0
-供使用者依據自己的需求選擇想要的餐廳 
+供使用者依據自己的需求選擇想要的餐廳<br>
 供使用者可以新增、刪除、修改餐廳列表
 
 ## 功能
@@ -27,7 +27,7 @@
 + 使用者可以新增餐廳資訊
 
 ## 參考畫面
-![image](https://user-images.githubusercontent.com/54500773/187078617-22344b2f-0680-4c94-a28b-68d493432e03.png)
+![image](https://user-images.githubusercontent.com/54500773/189491652-e48abdf4-1328-4eea-b783-29cac0d558b0.png)
 ![image](https://user-images.githubusercontent.com/54500773/187078665-0dcdfd6f-2988-43e9-86a4-40f37b929cc2.png)
 ![image](https://user-images.githubusercontent.com/54500773/187078689-cac47c1e-a87f-42ed-aac4-f5e6c7979bed.png)
 ![image](https://user-images.githubusercontent.com/54500773/187078721-0efed399-e8f2-4229-9ae1-e11113abb8de.png)
