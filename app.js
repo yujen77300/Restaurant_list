@@ -126,6 +126,14 @@ app.post('/restaurants/:id/edit', (req, res) => {
 
 })
 
+// 功能五: 使用者可以刪除一家餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurantList => restaurantList.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 
 // 設定搜尋的路由
