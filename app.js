@@ -20,8 +20,9 @@ db.once('open', () => {
 
 // 載入handlebars，這是用來處理要回傳給瀏覽器的畫面
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 //原本是透過JSON檔案取得 restaurantList，
-const restaurantList = require('./restaurant.json')
+// const restaurantList = require('./restaurant.json')
 // 但接下來要透過取得restaurant的model來取得資料
 const Restaurant = require('./models/restaurant')
 // 再來要告訴express要把樣板引擎給handlebars，第一個參數為樣板引擎名稱，第二個代表預設部局使用main檔案
@@ -29,6 +30,23 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 // 要設定view engine是用handkebars，這邊第二個參數就是上面方法的第一個參數
 app.set('view engine', 'handlebars')
 
+
+// 功能三: 新增一家餐廳
+//先顯示新增的樣板
+app.get("/restaurants/new", (req, res) => {
+  res.render("new")
+})
+
+// 每一個request進來偷會通過bodyparser
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.post("/restaurants", (req, res) => {
+  // 呼叫create方法，直接在Restaurant這個model新增資料
+  // console.log(req.body)
+  Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
+    .catch(err => console.log(err))
+})
 
 
 
@@ -62,6 +80,9 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
   // res.render('show', { restaurant: restaurant })
 })
+
+
+
 
 // 設定搜尋的路由
 app.get('/search', (req, res) => {

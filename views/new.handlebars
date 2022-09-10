@@ -1,0 +1,61 @@
+{{!-- 用form建立表單 --}}
+<h1 class=" restaurant-show-title">新增餐廳</h1>
+<div class="container">
+  {{!-- action代表要送到的位置 --}}
+  <form action="/restaurants" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="name" placeholder="布納咖啡館 信義館" name="name" required />
+    </div>
+    <div class="mb-3">
+      <label for="name_en" class="form-label">English Name<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="name_en" placeholder="BUNA CAF'E Xinyi" name="name_en" required />
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="category" placeholder="咖啡" list="categoryOptions" name="category"
+        required />
+      {{! 使用datalist，讓使用者可選擇或自行輸入 }}
+      <datalist id="categoryOptions">
+        <option>咖啡</option>
+        <option>美式</option>
+        <option>酒吧</option>
+        <option>中東料理</option>
+        <option>日本料理</option>
+        <option>義式餐廳</option>
+      </datalist>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image<span class="text-danger">*</span></label>
+      {{!-- 限制為url --}}
+      <input type="url" class="form-control" id="image" name="image" required />
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="location" placeholder="台北市信義區信義路四段415之3號" name="location" required />
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">phone<span class="text-danger">*</span></label>
+      <input type="tel" class="form-control" id="phone" placeholder="02-27589886" name="phone" required />
+    </div>
+    <div class="mb-3">
+      <label for="google_map" class="form-label">Google map<span class="text-danger">*</span></label>
+      <input type="url" class="form-control" id="google_map" name="google_map" required />
+    </div>
+    <div class="mb-3">
+      <label for="rating" class="form-label">Rating<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" id="rating" min="0" max="5" step="0.1" name="rating" required />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+      <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">
+        新增餐廳
+      </button>
+      {{!-- reset可以重新輸入 --}}
+      <button type="reset" class="btn btn-outline-danger">重新輸入</button>
+    </div>
+  </form>
+</div>
