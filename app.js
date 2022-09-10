@@ -31,7 +31,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 
-// 功能三: 新增一家餐廳
+// 功能三: 新增一家餐廳，之後要再新增new的樣板
 //先顯示新增的樣板
 app.get("/restaurants/new", (req, res) => {
   res.render("new")
@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 app.use(express.static('public'))
 
 
-// 功能二 : 設定瀏覽一家餐廳的詳細資訊，show的路由 
+// 功能二 : 設定瀏覽一家餐廳的詳細資訊，之後要再新增show的樣板
 app.get('/restaurants/:id', (req, res) => {
   // 要顯示資訊只會有一個，所以用find
   // const restaurant = restaurantList.results.find(item => item.id.toString() === req.params.id)
@@ -81,6 +81,50 @@ app.get('/restaurants/:id', (req, res) => {
   // res.render('show', { restaurant: restaurant })
 })
 
+// 功能四: 修改一家餐廳的資訊，之後要再新增edit的樣板
+app.get('/restaurants/:id/edit', (req, res) => {
+  // 要顯示資訊只會有一個，所以用find
+  // 用mongoose的方法來找特定ip
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurantList => res.render('edit', { restaurant: restaurantList }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const rating = req.body.rating
+  const google_map = req.body.google_map
+  const description = req.body.description
+  return Restaurant.findById(id)
+    .then(restaurantList => {
+      restaurantList.name = name
+      restaurantList.name_en = name_en
+      restaurantList.category = category
+      restaurantList.image = image
+      restaurantList.location = location
+      restaurantList.google_map = google_map
+      restaurantList.description = description
+      restaurantList.rating = rating
+      restaurantList.phone = phone
+      return restaurantList.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+
+  // 參考同學寫法可以直耶用mongoose的方法，直接全部更新
+  // Restaurant.findByIdAndUpdate(id, req.body)
+  //   .then(() => res.redirect(`/restaurants/${id}`))
+  //   .catch(err => console.log(err))
+
+})
 
 
 

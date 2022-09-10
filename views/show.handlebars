@@ -34,8 +34,15 @@
         {{restaurant.description}}
       </p>
 
-      <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="布娜飛比利時啤酒餐廳"
+      <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}"
         style="max-width: 600px;">
     </div>
   </div>
+  <div class=" d-flex flex-row justify-content-center" style="margin-bottom:30px">
+    <a href="/restaurants/{{restaurant._id}}/edit"><button class="btn btn-link btn-sm">Edit</button></a>
+    <form action="/restaurants/{{restaurant._id}}?_method=DELETE" method="POST">
+      <button type="submit" class="btn btn-danger btn-sm text-white">delete</button>
+    </form>
+  </div>
+</div>
 </div>
