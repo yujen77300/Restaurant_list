@@ -55,11 +55,15 @@ cd Restaurant_list
 ```
 npm install
 ```
-4. 執行此專案
+4. 設定環境變數連線 MongoDB
+```
+MONGODB_URI=mongodb+srv://<Your MongoDB Account>:<Your MongoDB Password>@cluster0.xxxx.xxxx.net/<Your MongoDB Table><?retryWrites=true&w=majority
+```
+5. 執行此專案
 ```
 npm run dev
 ```
-5. 打開瀏覽器，輸入下列
+6. 打開瀏覽器，輸入下列
 ```
 localhost:3000
 ```
