@@ -64,6 +64,41 @@ app.get('/', (req, res) => {
 })
 
 
+app.post('/sortby', (req, res) => {
+  const sortitem = req.body.sort
+
+  if (sortitem === "name-asc") {
+    return Restaurant.find()
+      .lean()
+      .sort({ name: 'asc' })
+      .then(restaurantList => res.render('index', { restaurant: restaurantList, sortitem }))
+      .catch(error => console.error(error))
+  } else if (sortitem === "name-desc") {
+    return Restaurant.find()
+      .lean()
+      .sort({ name: 'desc' })
+      .then(restaurantList => res.render('index', { restaurant: restaurantList, sortitem }))
+      .catch(error => console.error(error))
+  } else if (sortitem === "category") {
+    return Restaurant.find()
+      .lean()
+      .sort({ category: 'asc' })
+      .then(restaurantList => res.render('index', { restaurant: restaurantList, sortitem }))
+      .catch(error => console.error(error))
+  } else if (sortitem === "location") {
+    return Restaurant.find()
+      .lean()
+      .sort({ location: 'asc' })
+      .then(restaurantList => res.render('index', { restaurant: restaurantList, sortitem }))
+      .catch(error => console.error(error))
+  }
+})
+
+
+
+
+
+
 //設定靜態檔案的路由
 app.use(express.static('public'))
 
@@ -146,7 +181,6 @@ app.get('/search', (req, res) => {
   if (!req.query.location) {
     req.query.location = "台北市"
   }
-
   Restaurant.find({})
     .lean()
     .then(restaurantList => {
@@ -157,6 +191,8 @@ app.get('/search', (req, res) => {
       res.render('index', { restaurant: searchRestaurant, keyword: req.query.keyword, location: req.query.location, totalResults: `共發現${searchRestaurant.length}間餐廳` })
     })
     .catch(err => console.log(err))
+
+
 
 })
 

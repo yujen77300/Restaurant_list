@@ -58,4 +58,13 @@
       <button type="reset" class="btn btn-outline-danger">重新輸入</button>
     </div>
   </form>
+  <form action="/sortby" method="POST" id="sortby">
+    <select onchange="this.form.submit()" class="form-select" name="sort" form="sortby">
+      <option selected>Sort</option>
+      <option value="name">A -> Z</option>
+      <option value="name-deasc">Z -> A</option>
+      <option value="category">類別</option>
+      <option value="location">地區</option>
+    </select>
+  </form>
 </div>

@@ -10,6 +10,15 @@ header {
   color: #226089;
 }
 
+
+.input-group {
+  width: 400px;
+}
+
+.form-select {
+  width: 200px;
+}
+
 .banner {
   position: relative;
   z-index: -1;

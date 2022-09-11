@@ -2,22 +2,32 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      {{!-- action會影響路由位置 --}}
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
+      <h4 class="mb-2">尋找餐廳：</h4>
+      <div style="display:flex;justify-content:space-between">
+        <form action="/search">
+          <div class="input-group">
+            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+              value="{{keyword}}" aria-describedby="search-button">
 
 
-          <input type="text" name="location" class="form-control" placeholder="輸入地址" aria-label="Restaurant Location..."
-            value="{{location}}" aria-describedby="search-button">
+            <input type="text" name="location" class="form-control" placeholder="輸入地址"
+              aria-label="Restaurant Location..." value="{{location}}" aria-describedby="search-button">
 
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            <div class="input-group-append">
+              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+        <form action="/sortby" method="POST" id="sortby">
+          <select onchange="this.form.submit()" class="form-select" name="sort" form="sortby">
+            <option>Sort</option>
+            <option value="name-asc" {{#if sortitem.name}}selected{{/if}}>A -> Z</option>
+            <option value="name-desc" {{#if sortitem.name-desc}}selected{{/if}}>Z -> A</option>
+            <option value="category" {{#if sortitem.category}}selected{{/if}}>類別</option>
+            <option value="location" {{#if sortitem.location}}selected{{/if}}>地區</option>
+          </select>
+        </form>
+      </div>
     </div>
   </div>
 </div>
