@@ -129,27 +129,10 @@ app.get('/restaurants/:id/edit', (req, res) => {
 
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
-  const name_en = req.body.name_en
-  const category = req.body.category
-  const image = req.body.image
-  const location = req.body.location
-  const phone = req.body.phone
-  const rating = req.body.rating
-  const google_map = req.body.google_map
-  const description = req.body.description
   return Restaurant.findById(id)
-    .then(restaurantList => {
-      restaurantList.name = name
-      restaurantList.name_en = name_en
-      restaurantList.category = category
-      restaurantList.image = image
-      restaurantList.location = location
-      restaurantList.google_map = google_map
-      restaurantList.description = description
-      restaurantList.rating = rating
-      restaurantList.phone = phone
-      return restaurantList.save()
+    .then(restaurant => {
+      restaurant = Object.assign(restaurant, req.body)
+      return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
