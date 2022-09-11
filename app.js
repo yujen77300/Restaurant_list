@@ -18,6 +18,11 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
+//載入method-over-ride
+// 載入 method-override
+const methodOverride = require('method-override')
+
+
 // 載入handlebars，這是用來處理要回傳給瀏覽器的畫面
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -30,6 +35,13 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 // 要設定view engine是用handkebars，這邊第二個參數就是上面方法的第一個參數
 app.set('view engine', 'handlebars')
 
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
+// 每一個request進來偷會通過bodyparser
+app.use(bodyParser.urlencoded({ extended: true }))
+//設定靜態檔案的路由
+app.use(express.static('public'))
+
 
 // 功能三: 新增一家餐廳，之後要再新增new的樣板
 //先顯示新增的樣板
@@ -37,8 +49,6 @@ app.get("/restaurants/new", (req, res) => {
   res.render("new")
 })
 
-// 每一個request進來偷會通過bodyparser
-app.use(bodyParser.urlencoded({ extended: true }))
 
 app.post("/restaurants", (req, res) => {
   // 呼叫create方法，直接在Restaurant這個model新增資料
@@ -99,8 +109,7 @@ app.post('/sortby', (req, res) => {
 
 
 
-//設定靜態檔案的路由
-app.use(express.static('public'))
+
 
 
 // 功能二 : 設定瀏覽一家餐廳的詳細資訊，之後要再新增show的樣板
@@ -127,7 +136,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => {
@@ -145,7 +154,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // 功能五: 使用者可以刪除一家餐廳
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurantList => restaurantList.remove())

@@ -2,7 +2,7 @@
 <h1 class=" restaurant-show-title">修改餐廳「{{restaurant.name}}」的資訊</h1>
 <div class="container">
   {{!-- action代表要送到的位置 --}}
-  <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+  <form action="/restaurants/{{restaurant._id}}?_method=PUT" method="POST">
     <div class="mb-3">
       <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
       <input type="text" class="form-control" id="name" placeholder="布納咖啡館 信義館" name="name" value="{{restaurant.name}}"
